@@ -1,39 +1,146 @@
 <!DOCTYPE html>
 <html>
-  <body>
+  <head>
+    <title>Monster Detail</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      h2 {
+        margin-bottom: 10px;
+      }
+
+      select {
+        min-width: 180px;
+      }
+
+      table {
+        margin-top: 15px;
+        border-collapse: collapse;
+        min-width: 280px;
+      }
+
+      th, td {
+        border: 1px solid #ccc;
+        padding: 6px 10px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
 
     <script>
-      const people = [
-        "Alice Anderson",
-        "Aaron Adams",
-        "Bella Brown",
-        "Brian Black",
-        "Cathy Carter",
-        "Charles Cooper",
-        "Diana Davis",
-        "Daniel Drake",
-        "Ella Evans",
-        "Ethan Edwards",
-        "Fiona Fisher",
-        "Frank Foster",
-        "Grace Green",
-        "Gavin Gray",
-        "Hannah Harris",
-        "Henry Hill",
-        "Isabella Ingram",
-        "Ian Irving",
-        "Jack Johnson",
-        "Julia James"
+
+      const monsters = [
+        {
+          name: "Fire Dragon",
+          element: "Fire",
+          hp: 3000,
+          attack: 250
+        },
+        {
+          name: "Ice Wolf",
+          element: "Ice",
+          hp: 1800,
+          attack: 160
+        },
+        {
+          name: "Shadow Goblin",
+          element: "Dark",
+          hp: 1200,
+          attack: 140
+        },
+        {
+          name: "Lightning Phoenix",
+          element: "Lightning",
+          hp: 2200,
+          attack: 210
+        },
+        {
+          name: "Earth Golem",
+          element: "Earth",
+          hp: 3500,
+          attack: 180
+        },
+        {
+          name: "Poison Spider",
+          element: "Poison",
+          hp: 900,
+          attack: 130
+        }
       ];
 
-      const letter = "B";
+      window.onload = function () {
+        const select = document.getElementById("monsterSelect");
 
-      const result = people.filter(function(name) {
-        return name.charAt(0) === letter;
-      });
+        select.innerHTML = '<option value="">-</option>';
 
-      console.log(result);
+        monsters.forEach(function (m) {
+          select.innerHTML += '<option value="' + m.name + '">' + m.name + "</option>";
+        });
+      };
+
+      function clearMonster() {
+        document.getElementById("mName").textContent = "";
+        document.getElementById("mElement").textContent = "";
+        document.getElementById("mHP").textContent = "";
+        document.getElementById("mAttack").textContent = "";
+      }
+
+      function showMonster() {
+        const select = document.getElementById("monsterSelect");
+        const chosenName = select.value;
+
+        if (chosenName === "") {
+          clearMonster();
+          return;
+        }
+
+        const monster = monsters.find(function (m) {
+          return m.name === chosenName;
+        });
+
+        if (monster) {
+          document.getElementById("mName").textContent = monster.name;
+          document.getElementById("mElement").textContent = monster.element;
+          document.getElementById("mHP").textContent = monster.hp;
+          document.getElementById("mAttack").textContent = monster.attack;
+        }
+      }
     </script>
+  </head>
 
+  <body>
+    <h2>Monster Detail</h2>
+
+    <p>
+      Select Monster:
+      <select id="monsterSelect" onchange="showMonster()"></select>
+    </p>
+
+    <hr>
+
+    <table>
+      <tr>
+        <th>Name</th>
+        <td id="mName"></td>
+      </tr>
+      <tr>
+        <th>Element</th>
+        <td id="mElement"></td>
+      </tr>
+      <tr>
+        <th>HP</th>
+        <td id="mHP"></td>
+      </tr>
+      <tr>
+        <th>Attack</th>
+        <td id="mAttack"></td>
+      </tr>
+    </table>
   </body>
 </html>
